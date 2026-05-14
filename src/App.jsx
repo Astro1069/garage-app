@@ -65,6 +65,7 @@ const [vehiclePlate, setVehiclePlate] = useState("");
   }
   const [vehicles, setVehicles] = useState([]);
   const [selectedVehicle, setSelectedVehicle] = useState(null);
+const [vehicleDetailView, setVehicleDetailView] = useState(false);
 
   // ENTRETIEN
   const [lastOilKm, setLastOilKm] = useState("");
@@ -241,6 +242,9 @@ const [vehiclePlate, setVehiclePlate] = useState("");
 
       <div className="card">
         <h2>🚘 Mes véhicules</h2>
+<p style={{ color: "#666" }}>
+Ici tu vois uniquement ton garage. Clique sur un véhicule pour voir ses détails.
+</p>
 
         <select
   value={vehicleType}
@@ -381,63 +385,78 @@ const [vehiclePlate, setVehiclePlate] = useState("");
 
         <button onClick={addVehicle}>Ajouter véhicule</button>
 
-        {vehicles.map((vehicle) => (
-  <div
-    key={vehicle.id}
-    onClick={() => setSelectedVehicle(vehicle)}
-    style={{
-      background: selectedVehicle?.id === vehicle.id ? "#e8f3ff" : "white",
-      border: selectedVehicle?.id === vehicle.id ? "2px solid #007bff" : "1px solid #ddd",
-      borderRadius: "20px",
-      overflow: "hidden",
-      boxShadow: "0 6px 15px rgba(0,0,0,0.08)",
-      marginBottom: "20px",
-      cursor: "pointer"
-    }}
-  >
-    {vehicle.photo && (
+        {!vehicleDetailView ? (
+  vehicles.map((vehicle) => (
+    <div
+      key={vehicle.id}
+      onClick={() => {
+        setSelectedVehicle(vehicle);
+        setVehicleDetailView(true);
+      }}
+      style={{
+        background: "white",
+        borderRadius: "20px",
+        overflow: "hidden",
+        boxShadow: "0 6px 15px rgba(0,0,0,0.08)",
+        marginBottom: "20px",
+        cursor: "pointer"
+      }}
+    >
+      {vehicle.photo && (
+        <img
+          src={vehicle.photo}
+          alt={vehicle.model}
+          style={{
+            width: "100%",
+            height: "220px",
+            objectFit: "cover"
+          }}
+        />
+      )}
+
+      <div style={{ padding: "20px" }}>
+        <h3>{vehicle.name}</h3>
+        <p>{vehicle.brand} {vehicle.model}</p>
+        <p>📍 {vehicle.km} km</p>
+      </div>
+    </div>
+  ))
+) : (
+  <div className="card">
+    <button onClick={() => setVehicleDetailView(false)}>
+      ⬅ Retour au garage
+    </button>
+
+    <h2>{selectedVehicle?.name}</h2>
+
+    {selectedVehicle?.photo && (
       <img
-        src={vehicle.photo}
-        alt={vehicle.model}
+        src={selectedVehicle.photo}
+        alt={selectedVehicle.model}
         style={{
           width: "100%",
-          height: "220px",
-          objectFit: "cover"
+          height: "250px",
+          objectFit: "cover",
+          borderRadius: "15px"
         }}
       />
     )}
 
-    <div style={{ padding: "20px" }}>
-      <h3 style={{ margin: 0 }}>
-        {vehicle.type}
-        {vehicle.name}
-      </h3>
+    <p>🚗 {selectedVehicle?.brand} {selectedVehicle?.model}</p>
+    <p>🧬 {selectedVehicle?.phase}</p>
+    <p>⚙️ {selectedVehicle?.engine}</p>
+    <p>🔖 {selectedVehicle?.plate}</p>
+    <p>📍 {selectedVehicle?.km} km</p>
 
-      <p style={{ color: "#666", marginTop: "8px" }}>
-        {vehicle.brand} {vehicle.model}
-<br />
-🧬 {vehicle.phase}
-<br />
-⚙️ {vehicle.engine}
-      </p>
-
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "space-between",
-          marginTop: "15px"
-        }}
-      >
-        <span>📍 {vehicle.km} km
-        <br />
-        🔖 {vehicle.plate}</span>
-        <span>
-          {selectedVehicle?.id === vehicle.id ? "✅ Sélectionné" : "➡️ Voir"}
-        </span>
-      </div>
+    <h3>Accès rapide :</h3>
+    <div style={{ display: "grid", gap: "10px" }}>
+      <button>⛽ Carburant</button>
+      <button>🔧 Réparations</button>
+      <button>🛠️ Entretien</button>
+      <button>💸 Coûts</button>
     </div>
   </div>
-))}
+)}
       </div>
 
       <div className="card">
