@@ -4,6 +4,7 @@ import "./App.css";
 function App() {
   // VEHICULES
   const [vehicleName, setVehicleName] = useState("");
+const [vehicleType, setVehicleType] = useState("");
   const [vehicleBrand, setVehicleBrand] = useState("");
   const [vehicleModel, setVehicleModel] = useState("");
 const [vehicleEngine, setVehicleEngine] = useState("");
@@ -75,6 +76,7 @@ const [vehiclePlate, setVehiclePlate] = useState("");
     const newVehicle = {
       id: Date.now(),
       name: vehicleName,
+      type: vehicleType,
       brand: vehicleBrand,
       model: vehicleModel,
       phase: vehiclePhase,
@@ -88,6 +90,7 @@ const [vehiclePlate, setVehiclePlate] = useState("");
     setSelectedVehicle(newVehicle);
 
     setVehicleName("");
+    setVehicleType("");
     setVehicleBrand("");
     setVehicleModel("");
     setVehicleEngine("");
@@ -182,7 +185,18 @@ const [vehiclePlate, setVehiclePlate] = useState("");
       <div className="card">
         <h2>🚘 Mes véhicules</h2>
 
-        <input
+        <select
+  value={vehicleType}
+  onChange={(e) => setVehicleType(e.target.value)}
+>
+  <option value="">Choisir un type</option>
+  <option value="Auto">🚗 Auto</option>
+  <option value="Moto">🏍️ Moto</option>
+  <option value="Utilitaire">🚚 Utilitaire</option>
+  <option value="Bateau">🚤 Bateau</option>
+</select>
+
+<input
           placeholder="Nom du véhicule (ex: Ma 607)"
           value={vehicleName}
           onChange={(e) => setVehicleName(e.target.value)}
@@ -338,6 +352,7 @@ const [vehiclePlate, setVehiclePlate] = useState("");
 
     <div style={{ padding: "20px" }}>
       <h3 style={{ margin: 0 }}>
+        {vehicle.type}
         {vehicle.name}
       </h3>
 
