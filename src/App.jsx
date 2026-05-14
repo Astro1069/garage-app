@@ -2,6 +2,7 @@ import { useState } from "react";
 import "./App.css";
 
 function App() {
+  const [currentView, setCurrentView] = useState("home");
   // VEHICULES
   const [vehicleName, setVehicleName] = useState("");
 const [vehicleType, setVehicleType] = useState("");
@@ -178,8 +179,64 @@ const [vehiclePlate, setVehiclePlate] = useState("");
     parseFloat(insurance || 0) +
     parseFloat(ct || 0);
 
+  if (currentView === "home") {
+    return (
+      <div className="container">
+        <h1>🚘 Mon Garage</h1>
+        <p style={{ textAlign: "center", color: "#666" }}>
+          Choisis ce que tu veux gérer
+        </p>
+
+        <div style={{ display: "grid", gap: "20px", marginTop: "30px" }}>
+          <div
+            className="card"
+            onClick={() => setCurrentView("vehicles")}
+            style={{ cursor: "pointer", textAlign: "center" }}
+          >
+            <h2>🚗 Mes véhicules</h2>
+            <p>Voir et ajouter tes véhicules</p>
+          </div>
+
+          <div
+            className="card"
+            onClick={() => setCurrentView("fuel")}
+            style={{ cursor: "pointer", textAlign: "center" }}
+          >
+            <h2>⛽ Carburant</h2>
+            <p>Suivre tes pleins et ta consommation</p>
+          </div>
+
+          <div
+            className="card"
+            onClick={() => setCurrentView("repairs")}
+            style={{ cursor: "pointer", textAlign: "center" }}
+          >
+            <h2>🔧 Réparations</h2>
+            <p>Pièces, mécanique et entretien</p>
+          </div>
+
+          <div
+            className="card"
+            onClick={() => setCurrentView("costs")}
+            style={{ cursor: "pointer", textAlign: "center" }}
+          >
+            <h2>💸 Coûts</h2>
+            <p>Assurance, CT et dépenses totales</p>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="container">
+      <button
+        onClick={() => setCurrentView("home")}
+        style={{ marginBottom: "20px" }}
+      >
+        ⬅ Retour accueil
+      </button>
+
       <h1>🚗 Garage Tracker</h1>
 
       <div className="card">
