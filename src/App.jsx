@@ -7,6 +7,7 @@ function App() {
   const [vehicleBrand, setVehicleBrand] = useState("");
   const [vehicleModel, setVehicleModel] = useState("");
   const [vehicleKm, setVehicleKm] = useState("");
+  const [vehiclePhoto, setVehiclePhoto] = useState("");
   const [vehicles, setVehicles] = useState([]);
   const [selectedVehicle, setSelectedVehicle] = useState(null);
 
@@ -23,7 +24,8 @@ function App() {
       name: vehicleName,
       brand: vehicleBrand,
       model: vehicleModel,
-      km: parseFloat(vehicleKm || 0)
+      km: parseFloat(vehicleKm || 0),
+      photo: vehiclePhoto
     };
 
     setVehicles([...vehicles, newVehicle]);
@@ -33,6 +35,7 @@ function App() {
     setVehicleBrand("");
     setVehicleModel("");
     setVehicleKm("");
+    setVehiclePhoto("");
   }
 
   function nextOilChangeKm() {
@@ -144,6 +147,12 @@ function App() {
           onChange={(e) => setVehicleKm(e.target.value)}
         />
 
+        <input
+          placeholder="Lien photo véhicule"
+          value={vehiclePhoto}
+          onChange={(e) => setVehiclePhoto(e.target.value)}
+        />
+
         <button onClick={addVehicle}>Ajouter véhicule</button>
 
         {vehicles.map((vehicle) => (
@@ -153,6 +162,19 @@ function App() {
             onClick={() => setSelectedVehicle(vehicle)}
             style={{ cursor: "pointer" }}
           >
+            {vehicle.photo && (
+              <img
+                src={vehicle.photo}
+                alt={vehicle.model}
+                style={{
+                  width: "100%",
+                  maxHeight: "200px",
+                  objectFit: "cover",
+                  borderRadius: "10px",
+                  marginBottom: "10px"
+                }}
+              />
+            )}
             {vehicle.brand} {vehicle.model} - {vehicle.km} km
           </div>
         ))}
