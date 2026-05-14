@@ -51,6 +51,7 @@ function App() {
   const [pleins, setPleins] = useState([]);
 
   const [repairName, setRepairName] = useState("");
+  const [repairCategory, setRepairCategory] = useState("");
   const [repairCost, setRepairCost] = useState("");
   const [repairPlace, setRepairPlace] = useState("");
   const [repairs, setRepairs] = useState([]);
@@ -93,12 +94,14 @@ function App() {
         name: repairName,
         cost: parseFloat(repairCost),
         place: repairPlace,
+        category: repairCategory,
       },
     ]);
 
     setRepairName("");
     setRepairCost("");
     setRepairPlace("");
+    setRepairCategory("");
   }
 
   const totalFuel = pleins.reduce((t, p) => t + p.prix, 0);
@@ -202,6 +205,32 @@ function App() {
       <div className="card">
         <h2>🔧 Réparations</h2>
         <input placeholder="Nom réparation" value={repairName} onChange={(e) => setRepairName(e.target.value)} />
+
+        <div style={{ display: "flex", gap: "10px", marginBottom: "10px" }}>
+          <button
+            type="button"
+            onClick={() => setRepairCategory("Petite mécanique")}
+            style={{
+              background: repairCategory === "Petite mécanique" ? "#28a745" : "#ddd",
+              color: repairCategory === "Petite mécanique" ? "white" : "black",
+              flex: 1
+            }}
+          >
+            🛢️ Petite mécanique
+          </button>
+
+          <button
+            type="button"
+            onClick={() => setRepairCategory("Grosse mécanique")}
+            style={{
+              background: repairCategory === "Grosse mécanique" ? "#dc3545" : "#ddd",
+              color: repairCategory === "Grosse mécanique" ? "white" : "black",
+              flex: 1
+            }}
+          >
+            ⚙️ Grosse mécanique
+          </button>
+        </div>
         <input placeholder="Prix (€)" value={repairCost} onChange={(e) => setRepairCost(e.target.value)} />
         <div style={{ display: "flex", gap: "10px", marginTop: "10px", marginBottom: "10px" }}>
   <button
@@ -232,6 +261,7 @@ function App() {
 
         {repairs.map((r, i) => (
           <div key={i} className="item">
+            <strong>{r.category}</strong><br />
             {r.name} - {r.cost}€ ({r.place})
           </div>
         ))}
