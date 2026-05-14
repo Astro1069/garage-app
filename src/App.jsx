@@ -248,14 +248,14 @@ function App() {
         {vehicles.map((vehicle) => (
   <div
     key={vehicle.id}
-    className="vehicle-card"
     onClick={() => setSelectedVehicle(vehicle)}
     style={{
-      background: "white",
-      borderRadius: "15px",
+      background: selectedVehicle?.id === vehicle.id ? "#e8f3ff" : "white",
+      border: selectedVehicle?.id === vehicle.id ? "2px solid #007bff" : "1px solid #ddd",
+      borderRadius: "20px",
       overflow: "hidden",
-      boxShadow: "0px 4px 12px rgba(0,0,0,0.1)",
-      marginTop: "15px",
+      boxShadow: "0 6px 15px rgba(0,0,0,0.08)",
+      marginBottom: "20px",
       cursor: "pointer"
     }}
   >
@@ -265,16 +265,33 @@ function App() {
         alt={vehicle.model}
         style={{
           width: "100%",
-          height: "200px",
+          height: "220px",
           objectFit: "cover"
         }}
       />
     )}
 
-    <div style={{ padding: "15px" }}>
-      <h3>{vehicle.name}</h3>
-      <p>{vehicle.brand} {vehicle.model}</p>
-      <p>📍 {vehicle.km} km</p>
+    <div style={{ padding: "20px" }}>
+      <h3 style={{ margin: 0 }}>
+        {vehicle.name}
+      </h3>
+
+      <p style={{ color: "#666", marginTop: "8px" }}>
+        {vehicle.brand} {vehicle.model}
+      </p>
+
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "space-between",
+          marginTop: "15px"
+        }}
+      >
+        <span>📍 {vehicle.km} km</span>
+        <span>
+          {selectedVehicle?.id === vehicle.id ? "✅ Sélectionné" : "➡️ Voir"}
+        </span>
+      </div>
     </div>
   </div>
 ))}
