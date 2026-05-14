@@ -8,6 +8,18 @@ function App() {
   const [vehicleModel, setVehicleModel] = useState("");
   const [vehicleKm, setVehicleKm] = useState("");
   const [vehiclePhoto, setVehiclePhoto] = useState("");
+
+  function handlePhotoUpload(event) {
+    const file = event.target.files[0];
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      setVehiclePhoto(reader.result);
+    };
+
+    reader.readAsDataURL(file);
+  }
   const [vehicles, setVehicles] = useState([]);
   const [selectedVehicle, setSelectedVehicle] = useState(null);
 
@@ -148,10 +160,24 @@ function App() {
         />
 
         <input
-          placeholder="Lien photo véhicule"
-          value={vehiclePhoto}
-          onChange={(e) => setVehiclePhoto(e.target.value)}
+          type="file"
+          accept="image/*"
+          onChange={handlePhotoUpload}
         />
+
+        {vehiclePhoto && (
+          <img
+            src={vehiclePhoto}
+            alt="Preview"
+            style={{
+              width: "100%",
+              maxHeight: "200px",
+              objectFit: "cover",
+              borderRadius: "10px",
+              marginTop: "10px"
+            }}
+          />
+        )}
 
         <button onClick={addVehicle}>Ajouter véhicule</button>
 
