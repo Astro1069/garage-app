@@ -6,6 +6,18 @@ function App() {
   const [vehicleName, setVehicleName] = useState("");
   const [vehicleBrand, setVehicleBrand] = useState("");
   const [vehicleModel, setVehicleModel] = useState("");
+
+  const modelsByBrand = {
+    Peugeot: ["106", "206", "207", "208", "308", "407", "508", "607", "3008", "5008"],
+    Renault: ["Clio", "Megane", "Scenic", "Laguna", "Twingo", "Captur", "Austral"],
+    Citroën: ["C1", "C3", "C4", "C5", "Berlingo", "DS3"],
+    BMW: ["Serie 1", "Serie 3", "Serie 5", "X1", "X3", "X5"],
+    Mercedes: ["Classe A", "Classe C", "Classe E", "GLA", "GLE"],
+    Audi: ["A1", "A3", "A4", "A6", "Q3", "Q5"],
+    Volkswagen: ["Polo", "Golf", "Passat", "Tiguan", "Touareg"],
+    Toyota: ["Yaris", "Corolla", "Prius", "RAV4"],
+    Ford: ["Fiesta", "Focus", "Mondeo", "Kuga", "Mustang"]
+  };
   const [vehicleKm, setVehicleKm] = useState("");
   const [vehiclePhoto, setVehiclePhoto] = useState("");
 
@@ -193,11 +205,17 @@ function App() {
   <option value="McLaren">McLaren</option>
 </select>
 
-        <input
-          placeholder="Modèle"
-          value={vehicleModel}
-          onChange={(e) => setVehicleModel(e.target.value)}
-        />
+        <select
+  value={vehicleModel}
+  onChange={(e) => setVehicleModel(e.target.value)}
+>
+  <option value="">Choisir un modèle</option>
+  {vehicleBrand && modelsByBrand[vehicleBrand]?.map((model) => (
+    <option key={model} value={model}>
+      {model}
+    </option>
+  ))}
+</select>
 
         <input
           placeholder="Kilométrage actuel"
@@ -228,28 +246,38 @@ function App() {
         <button onClick={addVehicle}>Ajouter véhicule</button>
 
         {vehicles.map((vehicle) => (
-          <div
-            key={vehicle.id}
-            className="item"
-            onClick={() => setSelectedVehicle(vehicle)}
-            style={{ cursor: "pointer" }}
-          >
-            {vehicle.photo && (
-              <img
-                src={vehicle.photo}
-                alt={vehicle.model}
-                style={{
-                  width: "100%",
-                  maxHeight: "200px",
-                  objectFit: "cover",
-                  borderRadius: "10px",
-                  marginBottom: "10px"
-                }}
-              />
-            )}
-            {vehicle.brand} {vehicle.model} - {vehicle.km} km
-          </div>
-        ))}
+  <div
+    key={vehicle.id}
+    className="vehicle-card"
+    onClick={() => setSelectedVehicle(vehicle)}
+    style={{
+      background: "white",
+      borderRadius: "15px",
+      overflow: "hidden",
+      boxShadow: "0px 4px 12px rgba(0,0,0,0.1)",
+      marginTop: "15px",
+      cursor: "pointer"
+    }}
+  >
+    {vehicle.photo && (
+      <img
+        src={vehicle.photo}
+        alt={vehicle.model}
+        style={{
+          width: "100%",
+          height: "200px",
+          objectFit: "cover"
+        }}
+      />
+    )}
+
+    <div style={{ padding: "15px" }}>
+      <h3>{vehicle.name}</h3>
+      <p>{vehicle.brand} {vehicle.model}</p>
+      <p>📍 {vehicle.km} km</p>
+    </div>
+  </div>
+))}
       </div>
 
       <div className="card">
