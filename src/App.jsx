@@ -141,11 +141,57 @@ function App() {
           onChange={(e) => setVehicleName(e.target.value)}
         />
 
-        <input
-          placeholder="Marque"
-          value={vehicleBrand}
-          onChange={(e) => setVehicleBrand(e.target.value)}
-        />
+        <select
+  value={vehicleBrand}
+  onChange={(e) => setVehicleBrand(e.target.value)}
+>
+  <option value="">Choisir une marque</option>
+  <option value="Peugeot">Peugeot</option>
+  <option value="Renault">Renault</option>
+  <option value="Citroën">Citroën</option>
+  <option value="DS">DS</option>
+  <option value="Dacia">Dacia</option>
+  <option value="Volkswagen">Volkswagen</option>
+  <option value="Audi">Audi</option>
+  <option value="BMW">BMW</option>
+  <option value="Mercedes">Mercedes</option>
+  <option value="Opel">Opel</option>
+  <option value="Ford">Ford</option>
+  <option value="Toyota">Toyota</option>
+  <option value="Honda">Honda</option>
+  <option value="Nissan">Nissan</option>
+  <option value="Hyundai">Hyundai</option>
+  <option value="Kia">Kia</option>
+  <option value="Mazda">Mazda</option>
+  <option value="Fiat">Fiat</option>
+  <option value="Alfa Romeo">Alfa Romeo</option>
+  <option value="Jeep">Jeep</option>
+  <option value="Volvo">Volvo</option>
+  <option value="Skoda">Skoda</option>
+  <option value="Seat">Seat</option>
+  <option value="Cupra">Cupra</option>
+  <option value="Tesla">Tesla</option>
+  <option value="Porsche">Porsche</option>
+  <option value="Ferrari">Ferrari</option>
+  <option value="Lamborghini">Lamborghini</option>
+  <option value="Maserati">Maserati</option>
+  <option value="Jaguar">Jaguar</option>
+  <option value="Land Rover">Land Rover</option>
+  <option value="Mini">Mini</option>
+  <option value="Chevrolet">Chevrolet</option>
+  <option value="Dodge">Dodge</option>
+  <option value="Cadillac">Cadillac</option>
+  <option value="Suzuki">Suzuki</option>
+  <option value="Mitsubishi">Mitsubishi</option>
+  <option value="Subaru">Subaru</option>
+  <option value="Lexus">Lexus</option>
+  <option value="Infiniti">Infiniti</option>
+  <option value="Aston Martin">Aston Martin</option>
+  <option value="Bentley">Bentley</option>
+  <option value="Bugatti">Bugatti</option>
+  <option value="Rolls-Royce">Rolls-Royce</option>
+  <option value="McLaren">McLaren</option>
+</select>
 
         <input
           placeholder="Modèle"
