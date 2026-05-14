@@ -89,7 +89,31 @@ function App() {
         <h2>🔧 Réparations</h2>
         <input placeholder="Nom réparation" value={repairName} onChange={(e) => setRepairName(e.target.value)} />
         <input placeholder="Prix (€)" value={repairCost} onChange={(e) => setRepairCost(e.target.value)} />
-        <input placeholder="Garage / Maison" value={repairPlace} onChange={(e) => setRepairPlace(e.target.value)} />
+        <div style={{ display: "flex", gap: "10px", marginTop: "10px", marginBottom: "10px" }}>
+  <button
+    type="button"
+    onClick={() => setRepairPlace("Maison")}
+    style={{
+      background: repairPlace === "Maison" ? "#28a745" : "#ddd",
+      color: repairPlace === "Maison" ? "white" : "black",
+      flex: 1
+    }}
+  >
+    🏠 Maison
+  </button>
+
+  <button
+    type="button"
+    onClick={() => setRepairPlace("Garage")}
+    style={{
+      background: repairPlace === "Garage" ? "#007bff" : "#ddd",
+      color: repairPlace === "Garage" ? "white" : "black",
+      flex: 1
+    }}
+  >
+    🔧 Garage
+  </button>
+</div>
         <button onClick={addRepair}>Ajouter réparation</button>
 
         {repairs.map((r, i) => (
