@@ -6,6 +6,34 @@ function App() {
   const [vehicleName, setVehicleName] = useState("");
   const [vehicleBrand, setVehicleBrand] = useState("");
   const [vehicleModel, setVehicleModel] = useState("");
+const [vehicleEngine, setVehicleEngine] = useState("");
+const [vehiclePhase, setVehiclePhase] = useState("");
+
+const phasesByModel = {
+  "206": ["Phase 1", "Phase 2"],
+  "207": ["Phase 1", "Restylée"],
+  "208": ["Phase 1", "Phase 2"],
+  "308": ["Phase 1", "Phase 2", "Phase 3"],
+  "607": ["Phase 1", "Phase 2"],
+  "Clio": ["Clio 1", "Clio 2", "Clio 3", "Clio 4", "Clio 5"],
+  "Megane": ["Megane 1", "Megane 2", "Megane 3", "Megane 4"],
+  "Golf": ["Golf 4", "Golf 5", "Golf 6", "Golf 7", "Golf 8"],
+  "A3": ["8L", "8P", "8V", "8Y"],
+  "Serie 3": ["E36", "E46", "E90", "F30", "G20"]
+};
+
+const enginesByModel = {
+  "206": ["1.1 Essence", "1.4 Essence", "1.6 HDI", "2.0 HDI"],
+  "207": ["1.4 HDI", "1.6 HDI", "1.6 THP"],
+  "208": ["1.2 PureTech", "1.6 BlueHDi"],
+  "308": ["1.6 HDI", "2.0 HDI", "1.2 PureTech"],
+  "607": ["2.2 HDI", "2.7 HDI V6", "3.0 V6"],
+  "Clio": ["1.2 Essence", "1.5 dCi", "RS"],
+  "Megane": ["1.5 dCi", "1.6 Essence", "RS"],
+  "Golf": ["1.6 TDI", "2.0 TDI", "GTI"],
+  "A3": ["1.9 TDI", "2.0 TDI", "1.8 TFSI"],
+  "Serie 3": ["320d", "330d", "330i"]
+};
 
   const modelsByBrand = {
     Peugeot: ["106", "206", "207", "208", "308", "407", "508", "607", "3008", "5008"],
@@ -19,6 +47,7 @@ function App() {
     Ford: ["Fiesta", "Focus", "Mondeo", "Kuga", "Mustang"]
   };
   const [vehicleKm, setVehicleKm] = useState("");
+const [vehiclePlate, setVehiclePlate] = useState("");
   const [vehiclePhoto, setVehiclePhoto] = useState("");
 
   function handlePhotoUpload(event) {
@@ -48,7 +77,10 @@ function App() {
       name: vehicleName,
       brand: vehicleBrand,
       model: vehicleModel,
+      phase: vehiclePhase,
+      engine: vehicleEngine,
       km: parseFloat(vehicleKm || 0),
+      plate: vehiclePlate,
       photo: vehiclePhoto
     };
 
@@ -58,7 +90,10 @@ function App() {
     setVehicleName("");
     setVehicleBrand("");
     setVehicleModel("");
+    setVehicleEngine("");
+    setVehiclePhase("");
     setVehicleKm("");
+    setVehiclePlate("");
     setVehiclePhoto("");
   }
 
@@ -217,8 +252,38 @@ function App() {
   ))}
 </select>
 
-        <input
-          placeholder="Kilométrage actuel"
+        <select
+  value={vehiclePhase}
+  onChange={(e) => setVehiclePhase(e.target.value)}
+>
+  <option value="">Choisir une phase / génération</option>
+  {vehicleModel && phasesByModel[vehicleModel]?.map((phase) => (
+    <option key={phase} value={phase}>
+      {phase}
+    </option>
+  ))}
+</select>
+
+<select
+  value={vehicleEngine}
+  onChange={(e) => setVehicleEngine(e.target.value)}
+>
+  <option value="">Choisir une motorisation</option>
+  {vehicleModel && enginesByModel[vehicleModel]?.map((engine) => (
+    <option key={engine} value={engine}>
+      {engine}
+    </option>
+  ))}
+</select>
+
+<input
+  placeholder="Immatriculation (ex: AB-123-CD)"
+  value={vehiclePlate}
+  onChange={(e) => setVehiclePlate(e.target.value.toUpperCase())}
+/>
+
+<input
+  placeholder="Kilométrage actuel"
           value={vehicleKm}
           onChange={(e) => setVehicleKm(e.target.value)}
         />
@@ -278,6 +343,10 @@ function App() {
 
       <p style={{ color: "#666", marginTop: "8px" }}>
         {vehicle.brand} {vehicle.model}
+<br />
+🧬 {vehicle.phase}
+<br />
+⚙️ {vehicle.engine}
       </p>
 
       <div
@@ -287,7 +356,9 @@ function App() {
           marginTop: "15px"
         }}
       >
-        <span>📍 {vehicle.km} km</span>
+        <span>📍 {vehicle.km} km
+        <br />
+        🔖 {vehicle.plate}</span>
         <span>
           {selectedVehicle?.id === vehicle.id ? "✅ Sélectionné" : "➡️ Voir"}
         </span>
